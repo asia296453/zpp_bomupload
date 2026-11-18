@@ -1,4 +1,6 @@
-sap.ui.define([], function () {
+sap.ui.define(["zppbomupload/lib/jszip",
+	"zppbomupload/lib/xlsx",
+	"zppbomupload/lib/exceljs.min"],(jszip, xlsx, ExcelJS) => {
     "use strict";
 
     return {

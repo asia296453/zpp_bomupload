@@ -9,13 +9,19 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
+    "zppbomupload/lib/jszip",
+	"zppbomupload/lib/xlsx",
+	"zppbomupload/lib/exceljs.min",
     "zppbomupload/util/ExcelTemplate",
     "zppbomupload/util/ExcelHelper",
-    "sap/m/MessageBox"
-], (Controller, JSONModel, TableSelectDialog, Column, Label, Text, ColumnListItem, Filter, FilterOperator, MessageToast, ExcelTemplate, ExcelHelper, MessageBox) => {
+    "sap/m/MessageBox",
+    "sap/ui/export/Spreadsheet",
+    "sap/ui/export/library"    
+], (Controller, JSONModel, TableSelectDialog, Column, Label, Text, ColumnListItem, Filter, FilterOperator, MessageToast,jszip, xlsx, ExcelJS, ExcelTemplate, ExcelHelper, MessageBox ,Spreadsheet, exportLibrary) => {
     "use strict";
-
+    var EdmType = exportLibrary.EdmType;
     return Controller.extend("zppbomupload.controller.Main", {
+
         onInit: function () {
 
             var oLocalModel = new JSONModel({
@@ -277,16 +283,254 @@ sap.ui.define([
                     break;
             }
         },
-
         onDownloadBomTemplate: function () {
+            var aData = [
+                {
+				"Material" :"",
+                    "Plant" :"",
+                    "Alternative" :"",
+                    "Base qty" :"",
+                    "Base unit" :"",
+                    "Alt Text" :"",
+                    "BOM Text" :"",
+                    "Item" :"",
+                    "Component" :"",
+                    "Comp qty" :"",
+                    "Comp unit" :""
+				}
+            ];
+
+            var aColumns = [
+                {
+                    label: "Material",
+                    property: "Material",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Plant",
+                    property: "Plant",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Alternative",
+                    property: "Alternative",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Base qty",
+                    property: "Base qty",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Base unit",
+                    property: "Base unit",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Alt Text",
+                    property: "Alt Text",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "BOM Text",
+                    property: "BOM Text",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Item",
+                    property: "Item",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Component",
+                    property: "Component",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Comp qty",
+                    property: "Comp qty",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Comp unit",
+                    property: "Comp unit",
+                    type: exportLibrary.EdmType.String
+                }
+            ];
+
+            var oSettings = {
+                workbook: {
+                    columns: aColumns
+                },
+                dataSource: aData,
+                fileName: "BOM_File_Template.xlsx"
+            };
+
+            var oSpreadsheet = new Spreadsheet(oSettings);
+
+            oSpreadsheet.build().finally(function () {
+                oSpreadsheet.destroy();
+            });
+        },
+
+        onDownloadRoutingTemplate: function () {
+
+            // Sample data
+            var aData = [
+                {
+                    "Material": "",
+                    "Plant": "",
+                    "Task Description": "",
+                    "Usage": "",
+                    "Status": "",
+                    "Lot From": "",
+                    "Lot To": "",
+                    "Operation No": "",
+                    "Work Center": "",
+                    "Control Key": "",
+                    "Description": "",
+                    "Base qty": "",
+                    "Variable Labour": "",
+                    "Variable Labour Unit": "",
+                    "Variable Machinery": "",
+                    "Variable Machinery Unit": "",
+                    "Fixed Labour": "",
+                    "Fixed Labour Unit": "",
+                    "Fixed Machinery": "",
+                    "Fixed Machinery Unit": ""
+                }
+            ];
+
+            // Excel column definitions
+            var aColumns = [
+                {
+                    label: "Material",
+                    property: "Material",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Plant",
+                    property: "Plant",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Task Description",
+                    property: "Task Description",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Usage",
+                    property: "Usage",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Status",
+                    property: "Status",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Lot From",
+                    property: "Lot From",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Lot To",
+                    property: "Lot To",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Operation No",
+                    property: "Operation No",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Work Center",
+                    property: "Work Center",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Control Key",
+                    property: "Control Key",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Description",
+                    property: "Description",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Base qty",
+                    property: "Base qty",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Variable Labour",
+                    property: "Variable Labour",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Variable Labour Unit",
+                    property: "Variable Labour Unit",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Variable Machinery",
+                    property: "Variable Machinery",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Variable Machinery Unit",
+                    property: "Variable Machinery Unit",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Fixed Labour",
+                    property: "Fixed Labour",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Fixed Labour Unit",
+                    property: "Fixed Labour Unit",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Fixed Machinery",
+                    property: "Fixed Machinery",
+                    type: exportLibrary.EdmType.String
+                },
+                {
+                    label: "Fixed Machinery Unit",
+                    property: "Fixed Machinery Unit",
+                    type: exportLibrary.EdmType.String
+                }
+            ];
+
+            // Spreadsheet configuration
+            var oSettings = {
+                workbook: {
+                    columns: aColumns
+                },
+                dataSource: aData,
+                fileName: "Routing_File_Template.xlsx"
+            };
+
+            // Create Excel spreadsheet
+            var oSpreadsheet = new Spreadsheet(oSettings);
+
+            oSpreadsheet.build().finally(function () {
+                oSpreadsheet.destroy();
+            });
+
+        },
+        onDownloadBomTemplate1: function () {
 
             ExcelHelper.downloadBomTemplate();
 
         },
-        onDownloadRoutingTemplate: function () {
+        onDownloadRoutingTemplate1: function () {
             ExcelHelper.downloadRoutingTemplate();
         },
-        onBomFileAdded: function (oEvent) {
+        onBomFileAdded1: function (oEvent) {
 
             var oFile = oEvent.getParameter("files")[0];
 
@@ -305,17 +549,17 @@ sap.ui.define([
                 var oarrBom = [];
                 aData.forEach(function (oRow) {
                     oarrBom.push({
-                        Matnr: oRow.Material.toString(),
-                        Werks: oRow.Plant.toString(),
-                        Item: oRow.Item.toString(),
-                        Stlal: oRow.Alternative.toString(),
-                        Basmn: oRow["Base qty"].toString(),
-                        Basme: oRow["Base unit"].toString(),
-                        Stktx: oRow["Alt Text"].toString(),
-                        Cstext: oRow["BOM Text"].toString(),
-                        Idnrk: oRow.Component.toString(),
-                        Kmpmg: oRow["Comp qty"].toString(),
-                        Kmpme: oRow["Comp unit"].toString()
+                        Matnr: oRow.Material,
+                        Werks: oRow.Plant,
+                        Item: oRow.Item,
+                        Stlal: oRow.Alternative,
+                        Basmn: oRow["Base qty"],
+                        Basme: oRow["Base unit"],
+                        Stktx: oRow["Alt Text"],
+                        Cstext: oRow["BOM Text"],
+                        Idnrk: oRow.Component,
+                        Kmpmg: oRow["Comp qty"],
+                        Kmpme: oRow["Comp unit"]
                     });
                 });
                 oExcelModel.setProperty("/bomData", oarrBom);
@@ -326,7 +570,7 @@ sap.ui.define([
             }.bind(this);
             reader.readAsArrayBuffer(oFile);
         },
-        onRoutingFileAdded: function (oEvent) {
+        onRoutingFileAdded1: function (oEvent) {
 
             var oFile = oEvent.getParameter("files")[0];
             var reader = new FileReader();
@@ -343,26 +587,26 @@ sap.ui.define([
                 var oREQTOROUTING = [];
                 aData.forEach(function (oRow) {
                     oREQTOROUTING.push({
-                        Matnr: oRow.Material.toString().trim(),
-                        Werks: String(oRow.Plant).toString(),
-                        Vornr: String(oRow["Operation No"]).toString(),
-                        Plantext: oRow["Task Description"].toString(),
-                        Plnverwe: String(oRow.Usage).toString(),
-                        Plnst: String(oRow.Status).toString(),
-                        Losvn: String(oRow["Lot From"]).trim().toString(),
-                        Losbs: String(oRow["Lot To"]).trim().toString(),
-                        Arbpl: oRow["Work Center"].toString(),
-                        Steus: oRow["Control Key"].toString(),
-                        Ltxa1: oRow.Description.toString(),
-                        Bmsch: String(oRow["Base qty"]).trim().toString(),
-                        Act1: String(oRow["Variable Labour"].toString()),
-                        Actunt1: oRow["Variable Labour Unit"].toString(),
-                        Act2: String(oRow["Variable Machinery"].toString()),
-                        Actunt2: oRow["Variable Machinery Unit"].toString(),
-                        Act3: String(oRow["Fixed Labour"].toString()),
-                        Actunt3: oRow["Fixed Labour Unit"].toString(),
-                        Act4: String(oRow["Fixed Machinery"].toString()),
-                        Actunt4: oRow["Fixed Machinery Unit"].toString()
+                        Matnr: oRow.Material.trim(),
+                        Werks: oRow.Plant,
+                        Vornr: oRow["Operation No"],
+                        Plantext: oRow["Task Description"],
+                        Plnverwe: oRow.Usage,
+                        Plnst: oRow.Status,
+                        Losvn: oRow["Lot From"].trim(),
+                        Losbs: oRow["Lot To"].trim(),
+                        Arbpl: oRow["Work Center"],
+                        Steus: oRow["Control Key"],
+                        Ltxa1: oRow.Description,
+                        Bmsch: oRow["Base qty"].trim(),
+                        Act1: oRow["Variable Labour"],
+                        Actunt1: oRow["Variable Labour Unit"],
+                        Act2: oRow["Variable Machinery"],
+                        Actunt2: oRow["Variable Machinery Unit"],
+                        Act3: oRow["Fixed Labour"],
+                        Actunt3: oRow["Fixed Labour Unit"],
+                        Act4: oRow["Fixed Machinery"],
+                        Actunt4: oRow["Fixed Machinery Unit"]
 
                     });
                 });
@@ -440,42 +684,42 @@ sap.ui.define([
             };
             // aBomData.forEach(function (oRow) {
             //     oPayload.REQTOBOMITEMS.push({
-            //         Matnr: oRow.Material.toString(),
-            //         Werks: oRow.Plant.toString(),
-            //         Item: oRow.Item.toString(),
-            //         Stlal: oRow.Alternative.toString(),
-            //         Basmn: oRow["Base qty"].toString(),
-            //         Basme: oRow["Base unit"].toString(),
-            //         Stktx: oRow["Alt Text"].toString(),
-            //         Cstext: oRow["BOM Text"].toString(),
-            //         Idnrk: oRow.Component.toString(),
-            //         Kmpmg: oRow["Comp qty"].toString(),
-            //         Kmpme: oRow["Comp unit"].toString()
+            //         Matnr: oRow.Material,
+            //         Werks: oRow.Plant,
+            //         Item: oRow.Item,
+            //         Stlal: oRow.Alternative,
+            //         Basmn: oRow["Base qty"],
+            //         Basme: oRow["Base unit"],
+            //         Stktx: oRow["Alt Text"],
+            //         Cstext: oRow["BOM Text"],
+            //         Idnrk: oRow.Component,
+            //         Kmpmg: oRow["Comp qty"],
+            //         Kmpme: oRow["Comp unit"]
             //     });
             // });
 
             // aRoutingData.forEach(function (oRow) {
             //     oPayload.REQTOROUTING.push({
-            //         Matnr: oRow.Material.toString().trim(),
-            //         Werks: String(oRow.Plant).toString(),
-            //         Vornr: String(oRow["Operation No"]).toString(),
-            //         Plantext: oRow["Task Description"].toString(),
-            //         Plnverwe: String(oRow.Usage).toString(),
-            //         Plnst: String(oRow.Status).toString(),
-            //         Losvn: String(oRow["Lot From"]).trim().toString(),
-            //         Losbs: String(oRow["Lot To"]).trim().toString(),
-            //         Arbpl: oRow["Work Center"].toString(),
-            //         Steus: oRow["Control Key"].toString(),
-            //         Ltxa1: oRow.Description.toString(),
-            //         Bmsch: String(oRow["Base qty"]).trim().toString(),
-            //         Act1: String(oRow["Variable Labour"].toString()),
-            //         Actunt1: oRow["Variable Labour Unit"].toString(),
-            //         Act2: String(oRow["Variable Machinery"].toString()),
-            //         Actunt2: oRow["Variable Machinery Unit"].toString(),
-            //         Act3: String(oRow["Fixed Labour"].toString()),
-            //         Actunt3: oRow["Fixed Labour Unit"].toString(),
-            //         Act4: String(oRow["Fixed Machinery"].toString()),
-            //         Actunt4: oRow["Fixed Machinery Unit"].toString()
+            //         Matnr: oRow.Material.trim(),
+            //         Werks: String(oRow.Plant),
+            //         Vornr: String(oRow["Operation No"]),
+            //         Plantext: oRow["Task Description"],
+            //         Plnverwe: String(oRow.Usage),
+            //         Plnst: String(oRow.Status),
+            //         Losvn: String(oRow["Lot From"]).trim(),
+            //         Losbs: String(oRow["Lot To"]).trim(),
+            //         Arbpl: oRow["Work Center"],
+            //         Steus: oRow["Control Key"],
+            //         Ltxa1: oRow.Description,
+            //         Bmsch: String(oRow["Base qty"]).trim(),
+            //         Act1: String(oRow["Variable Labour"]),
+            //         Actunt1: oRow["Variable Labour Unit"],
+            //         Act2: String(oRow["Variable Machinery"]),
+            //         Actunt2: oRow["Variable Machinery Unit"],
+            //         Act3: String(oRow["Fixed Labour"]),
+            //         Actunt3: oRow["Fixed Labour Unit"],
+            //         Act4: String(oRow["Fixed Machinery"]),
+            //         Actunt4: oRow["Fixed Machinery Unit"]
 
             //     });
             // });
@@ -488,10 +732,11 @@ sap.ui.define([
                     sap.ui.core.BusyIndicator.hide();
                     debugger;
                     if (res.headers["sap-message"] !== undefined &&
-                        JSON.parse(res.headers["sap-message"]).message !== "") {
+                        JSON.parse(res.headers["sap-message"]).message !== ""
+                        && JSON.parse(res.headers["sap-message"]).message.indexOf("Created") === -1) {
                         MessageBox.error(JSON.parse(res.headers["sap-message"]).message);
                     } else {
-                        MessageBox.success(oPayload.Bomreq + " Request Created Successfully");
+                        MessageBox.success(oData.Bomreq + " Request Created Successfully");
                         oExcelModel.setProperty("/bomData", []);
                         oExcelModel.setProperty("/routingData", []);
                         oLocalModel.setProperty("/bomCount", 0);
@@ -524,7 +769,290 @@ sap.ui.define([
                 String(iMinutes).padStart(2, "0"),
                 String(iSecs).padStart(2, "0")
             ].join(":");
+        },
+
+        
+_loadXLSX: function () {
+
+    var that = this;
+
+    return new Promise(function (resolve, reject) {
+
+        // Already loaded?
+        if (window.XLSX) {
+            resolve(window.XLSX);
+            return;
         }
+
+        // Get BSP application root path
+        // var sAppPath = sap.ui.require.toUrl(
+        //     "zppbomupload"
+        // );
+        
+        var sAppPath="/sap/bc/ui5_ui5/sap/zppbomupload"
+
+        var sLibraryPath =
+            sAppPath + "/lib/xlsx.full.min.js";
+
+        console.log("Loading Excel library:", sLibraryPath);
+
+        var oScript = document.createElement("script");
+
+        oScript.type = "text/javascript";
+        oScript.src = sLibraryPath;
+
+        oScript.onload = function () {
+
+            console.log("SheetJS script loaded");
+
+            if (window.XLSX) {
+                resolve(window.XLSX);
+            } else {
+                reject(
+                    new Error("Script loaded, but XLSX is undefined.")
+                );
+            }
+
+        };
+
+        oScript.onerror = function () {
+
+            reject(
+                new Error("Unable to load: " + sLibraryPath)
+            );
+
+        };
+
+        document.head.appendChild(oScript);
+
+    });
+
+},
+
+onRoutingFileAdded: function (oEvent) {
+
+    var oFile = oEvent.getParameter("files")[0];
+
+    if (!oFile) {
+        return;
+    }
+
+    this._loadXLSX()
+        .then(function (XLSXLib) {
+
+            var oReader = new FileReader();
+
+            oReader.onload = function (e) {
+
+                try {
+
+                    var aBinary = new Uint8Array(
+                        e.target.result
+                    );
+
+                    var oWorkbook = XLSXLib.read(
+                        aBinary,
+                        {
+                            type: "array"
+                        }
+                    );
+
+                    var sSheetName =
+                        oWorkbook.SheetNames[0];
+
+                    var oWorksheet =
+                        oWorkbook.Sheets[sSheetName];
+
+                    var aExcelData =
+                        XLSXLib.utils.sheet_to_json(
+                            oWorksheet,
+                            {
+                                defval: "",
+                                raw: false
+                            }
+                        );
+
+                    console.log("Excel Data:", aExcelData);
+                    
+                    var oarrBom = [];
+                aExcelData.forEach(function (oRow) {
+                    oarrBom.push({
+                        Matnr: oRow.Material.trim(),
+                        Werks: oRow.Plant,
+                        Vornr: oRow["Operation No"],
+                        Plantext: oRow["Task Description"],
+                        Plnverwe: oRow.Usage,
+                        Plnst: oRow.Status,
+                        Losvn: oRow["Lot From"].trim(),
+                        Losbs: oRow["Lot To"].trim(),
+                        Arbpl: oRow["Work Center"],
+                        Steus: oRow["Control Key"],
+                        Ltxa1: oRow.Description,
+                        Bmsch: oRow["Base qty"].trim(),
+                        Act1: oRow["Variable Labour"],
+                        Actunt1: oRow["Variable Labour Unit"],
+                        Act2: oRow["Variable Machinery"],
+                        Actunt2: oRow["Variable Machinery Unit"],
+                        Act3: oRow["Fixed Labour"],
+                        Actunt3: oRow["Fixed Labour Unit"],
+                        Act4: oRow["Fixed Machinery"],
+                        Actunt4: oRow["Fixed Machinery Unit"]
+                    });
+                });
+                    this.getView()
+                        .getModel("excel")
+                        .setProperty(
+                            "/routingData",
+                            oarrBom
+                        );
+
+                    sap.m.MessageToast.show(
+                        aExcelData.length +
+                        " records uploaded successfully"
+                    );
+
+                } catch (error) {
+
+                    sap.m.MessageBox.error(
+                        "Excel Error: " + error.message
+                    );
+
+                    console.error(error);
+
+                }
+
+            }.bind(this);
+
+            oReader.onerror = function () {
+
+                sap.m.MessageBox.error(
+                    "Unable to read Excel file."
+                );
+
+            };
+
+            oReader.readAsArrayBuffer(oFile);
+
+        }.bind(this))
+
+        .catch(function (error) {
+
+            console.error(error);
+
+            sap.m.MessageBox.error(error.message);
+
+        });
+
+},
+
+onBomFileAdded: function (oEvent) {
+
+    var oFile = oEvent.getParameter("files")[0];
+
+    if (!oFile) {
+        return;
+    }
+
+    this._loadXLSX()
+        .then(function (XLSXLib) {
+
+            var oReader = new FileReader();
+
+            oReader.onload = function (e) {
+
+                try {
+
+                    var aBinary = new Uint8Array(
+                        e.target.result
+                    );
+
+                    var oWorkbook = XLSXLib.read(
+                        aBinary,
+                        {
+                            type: "array"
+                        }
+                    );
+
+                    var sSheetName =
+                        oWorkbook.SheetNames[0];
+
+                    var oWorksheet =
+                        oWorkbook.Sheets[sSheetName];
+
+                    var aExcelData =
+                        XLSXLib.utils.sheet_to_json(
+                            oWorksheet,
+                            {
+                                defval: "",
+                                raw: false
+                            }
+                        );
+
+                    console.log("Excel Data:", aExcelData);
+                    
+                    var oarrBom = [];
+                aExcelData.forEach(function (oRow) {
+                    oarrBom.push({
+                        Matnr: oRow.Material,
+                        Werks: oRow.Plant,
+                        Item: oRow.Item,
+                        Stlal: oRow.Alternative,
+                        Basmn: oRow["Base qty"],
+                        Basme: oRow["Base unit"],
+                        Stktx: oRow["Alt Text"],
+                        Cstext: oRow["BOM Text"],
+                        Idnrk: oRow.Component,
+                        Kmpmg: oRow["Comp qty"],
+                        Kmpme: oRow["Comp unit"]
+                    });
+                });
+                    this.getView()
+                        .getModel("excel")
+                        .setProperty(
+                            "/bomData",
+                            oarrBom
+                        );
+
+                    sap.m.MessageToast.show(
+                        aExcelData.length +
+                        " records uploaded successfully"
+                    );
+
+                } catch (error) {
+
+                    sap.m.MessageBox.error(
+                        "Excel Error: " + error.message
+                    );
+
+                    console.error(error);
+
+                }
+
+            }.bind(this);
+
+            oReader.onerror = function () {
+
+                sap.m.MessageBox.error(
+                    "Unable to read Excel file."
+                );
+
+            };
+
+            oReader.readAsArrayBuffer(oFile);
+
+        }.bind(this))
+
+        .catch(function (error) {
+
+            console.error(error);
+
+            sap.m.MessageBox.error(error.message);
+
+        });
+
+},
+
+
 
     });
 
