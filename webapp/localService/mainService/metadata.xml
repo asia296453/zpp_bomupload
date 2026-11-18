@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZPP_BOM_REQUEST_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="PLANTS" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Werks"/>
+                </Key>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name1" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Name 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="REQTYP" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Reqtyp"/>
+                </Key>
+                <Property Name="Reqtyp" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="BOM Request Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Text" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="REQSTAT" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Reqstat"/>
+                </Key>
+                <Property Name="Reqstat" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="BOM Request Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Text" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="BOMREQ" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bomreq"/>
+                </Key>
+                <Property Name="Bomreq" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Breeder Process Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name1" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Name 1" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Reqtyp" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="BOM Request Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Reqtypna" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Crtby" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="User Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Crtna" Type="Edm.String" Nullable="false" MaxLength="70" sap:unicode="false" sap:label="First and last name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Crtdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Crttime" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="BOM Request Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Statna" Type="Edm.String" Nullable="false" MaxLength="60" sap:unicode="false" sap:label="Short Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="REQTOROUTING" Relationship="ZPP_BOM_REQUEST_SRV.REQTOROUTING" FromRole="FromRole_REQTOROUTING" ToRole="ToRole_REQTOROUTING"/>
+                <NavigationProperty Name="REQTOBOMITEMS" Relationship="ZPP_BOM_REQUEST_SRV.REQTOBOMITEMS" FromRole="FromRole_REQTOBOMITEMS" ToRole="ToRole_REQTOBOMITEMS"/>
+            </EntityType>
+            <EntityType Name="BOMITEM" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bomreq"/>
+                    <PropertyRef Name="Matnr"/>
+                    <PropertyRef Name="Werks"/>
+                    <PropertyRef Name="Item"/>
+                    <PropertyRef Name="Stlal"/>
+                </Key>
+                <Property Name="Bomreq" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="BOM Request No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Item" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Stlal" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="AlternativeBOM" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Basmn" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Basme" sap:label="Base quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Basme" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base UoM" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Stktx" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Alt Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cstext" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="BOM Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Idnrk" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Component" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kmpmg" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:unit="Kmpme" sap:label="Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kmpme" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Component UoM" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Stlan" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Usage" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aennr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Change Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Itemcat" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="BOM category" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ROUTREQ" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bomreq"/>
+                    <PropertyRef Name="Matnr"/>
+                    <PropertyRef Name="Werks"/>
+                    <PropertyRef Name="Vornr"/>
+                </Key>
+                <Property Name="Bomreq" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="BOM Request No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Werks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vornr" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Activity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plantext" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Description" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plnverwe" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Usage" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plnst" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Losvn" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="From Lot Size" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Losbs" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="To Lot Size" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Arbpl" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Work Center" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Steus" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Control Key" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Ltxa1" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Op. Short Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Bmsch" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Base Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Act1" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Activity Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Actunt1" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Std value unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Act2" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Activity Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Actunt2" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Std value unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Act3" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Activity Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Actunt3" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Std value unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Act4" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Activity Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Actunt4" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Std value unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="Crdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aennr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Change Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="REQTOROUTING" sap:content-version="1">
+                <End Type="ZPP_BOM_REQUEST_SRV.BOMREQ" Multiplicity="0..1" Role="FromRole_REQTOROUTING"/>
+                <End Type="ZPP_BOM_REQUEST_SRV.ROUTREQ" Multiplicity="*" Role="ToRole_REQTOROUTING"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_REQTOROUTING">
+                        <PropertyRef Name="Bomreq"/>
+                    </Principal>
+                    <Dependent Role="ToRole_REQTOROUTING">
+                        <PropertyRef Name="Bomreq"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="REQTOBOMITEMS" sap:content-version="1">
+                <End Type="ZPP_BOM_REQUEST_SRV.BOMREQ" Multiplicity="0..1" Role="FromRole_REQTOBOMITEMS"/>
+                <End Type="ZPP_BOM_REQUEST_SRV.BOMITEM" Multiplicity="*" Role="ToRole_REQTOBOMITEMS"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_REQTOBOMITEMS">
+                        <PropertyRef Name="Bomreq"/>
+                    </Principal>
+                    <Dependent Role="ToRole_REQTOBOMITEMS">
+                        <PropertyRef Name="Bomreq"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZPP_BOM_REQUEST_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="PLANTSSet" EntityType="ZPP_BOM_REQUEST_SRV.PLANTS" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="REQTYPSet" EntityType="ZPP_BOM_REQUEST_SRV.REQTYP" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="REQSTATSet" EntityType="ZPP_BOM_REQUEST_SRV.REQSTAT" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="BOMREQSet" EntityType="ZPP_BOM_REQUEST_SRV.BOMREQ" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="BOMITEMSet" EntityType="ZPP_BOM_REQUEST_SRV.BOMITEM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ROUTREQSet" EntityType="ZPP_BOM_REQUEST_SRV.ROUTREQ" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="REQTOBOMITEMSSet" Association="ZPP_BOM_REQUEST_SRV.REQTOBOMITEMS" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="BOMREQSet" Role="FromRole_REQTOBOMITEMS"/>
+                    <End EntitySet="BOMITEMSet" Role="ToRole_REQTOBOMITEMS"/>
+                </AssociationSet>
+                <AssociationSet Name="REQTOROUTINGSet" Association="ZPP_BOM_REQUEST_SRV.REQTOROUTING" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="BOMREQSet" Role="FromRole_REQTOROUTING"/>
+                    <End EntitySet="ROUTREQSet" Role="ToRole_REQTOROUTING"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <atom:link rel="self" href="/sap/opu/odata/sap/ZPP_BOM_REQUEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="/sap/opu/odata/sap/ZPP_BOM_REQUEST_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

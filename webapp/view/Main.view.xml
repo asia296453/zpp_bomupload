@@ -1,0 +1,344 @@
+<mvc:View
+    controllerName="zppbomupload.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+   xmlns:t="sap.ui.table"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+   xmlns:u="sap.ui.unified"
+    xmlns:upload="sap.m.upload">
+
+    <Page id="page" title="BOM Request Upload">
+       <content>
+              <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="12"
+                labelSpanL="12"
+                labelSpanM="12"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="6"
+                columnsL="6"
+                columnsM="6"
+                singleContainerFullSize="false">
+                 <f:content>
+                    <core:Title text=""/>
+                    <Label text="Plant" required="true"/>
+                    <Input id="idPlant" value="{localModel>/Plant}" 
+                    enabled="{localModel>/savebutton}" editable="{localModel>/savebutton}"
+                    showValueHelp="true" valueHelpRequest=".onValueHelpRequest"/>
+                    <core:Title text=""/>
+                    <Label text="Description"/>
+                    <Text text="{localModel>/PlantDesc}"/>
+                    <core:Title text=""/>
+                    <Label text="Request Type"  required="true"/>
+                    <Input id="idReqType" value="{localModel>/ReqType}"
+                    enabled="{localModel>/savebutton}" editable="{localModel>/savebutton}"
+                     showValueHelp="true" valueHelpRequest=".onValueHelpRequest" change=".onReqTypeChange"/>
+                    <core:Title text=""/>
+                    <Label text="Description"/>
+                    <Text  text="{localModel>/ReqTypeDesc}"/>
+                   
+                </f:content>
+            </f:SimpleForm>
+           
+            <IconTabBar>
+       
+    <items>
+        <IconTabFilter  key="BOM"  text="BOM Upload" visible="{localModel>/showBom}">
+          <VBox>
+   
+<Toolbar>
+    <Title  text="Uploaded BOM Records ({localModel>/bomCount})"/>
+    <ToolbarSpacer/>
+     <Button id="btnDownloadBom"  text="Download Template" 
+     enabled="{localModel>/savebutton}"  
+      icon="sap-icon://download"  type="Emphasized" press=".onDownloadBomTemplate"/>
+<u:FileUploader
+    id="bomUploader"
+    buttonOnly="true"
+    buttonText="Select File"
+    icon="sap-icon://upload"
+    iconOnly="false"
+    sameFilenameAllowed="true"
+    fileType="xlsx,xls"
+    style="Emphasized"
+    change=".onBomFileAdded"/>
+    <Button  enabled="{localModel>/savebutton}"  
+        icon="sap-icon://excel-attachment"
+        press=".onDownloadBomExcel"/>
+
+</Toolbar>
+   
+    <t:Table id="bomTable" rows="{excel>/bomData}"  visibleRowCount="10" selectionMode="None" enableColumnReordering="true">
+    <t:columns>
+        <t:Column width="10rem">
+            <Label text="Material"/>
+            <t:template> <Text text="{excel>Matnr}"/></t:template>
+        </t:Column>
+        <t:Column width="8rem">
+            <Label text="Plant"/>
+            <t:template> <Text text="{excel>Werks}"/> </t:template>
+        </t:Column>
+        <t:Column width="8rem">
+         <Label text="Alternative"/>
+             <t:template> <Text text="{excel>Stlal}"/>   </t:template>
+        </t:Column>
+        <t:Column width="8rem">
+            <Label text="Base Qty"/>
+            <t:template> <Text text="{excel>Basmn}"/>  </t:template>
+        </t:Column>
+        <t:Column width="8rem">
+            <Label text="Base Unit"/>
+            <t:template> <Text text="{excel>Basme}"/> </t:template>
+        </t:Column>
+        <t:Column width="10rem">
+            <Label text="Alt Text"/>
+            <t:template> <Text text="{excel>Stktx}"/> </t:template>
+        </t:Column>
+        <t:Column width="10rem">
+            <Label text="BOM Text"/>
+            <t:template>  <Text text="{excel>Cstext}"/>  </t:template>
+        </t:Column>
+        <t:Column width="6rem">
+            <Label text="Item"/>
+            <t:template>  <Text text="{excel>Item}"/>  </t:template>
+        </t:Column>
+        <t:Column width="10rem">
+            <Label text="Component"/>
+            <t:template>
+                <Text text="{excel>Idnrk}"/> </t:template> </t:Column>
+        <t:Column width="8rem">
+            <Label text="Comp Qty"/>
+            <t:template> <Text text="{excel>Kmpmg}"/> </t:template>
+        </t:Column>
+        <t:Column width="8rem">
+            <Label text="Comp Unit"/>
+            <t:template> <Text text="{excel>Kmpme}"/> </t:template>
+        </t:Column>
+        <t:Column width="8rem">
+            <Label text="Status"/>
+            <t:template> <ObjectStatus  text="{excel>Status}"  state="{excel>State}"/> </t:template>
+        </t:Column>
+    </t:columns>
+</t:Table>
+             </VBox>
+         </IconTabFilter>
+        <IconTabFilter key="Routing" text="Routing Upload"  visible="{localModel>/showRouting}">
+           <VBox>
+   <Toolbar>
+
+        <Title text="Uploaded Routing Records ({localModel>/routingCount})"/>
+
+        <ToolbarSpacer/>
+    <ToolbarSpacer/>
+     <Button id="btnDownloadRouting" 
+     enabled="{localModel>/savebutton}"  
+      text="Download Template" icon="sap-icon://download"  type="Emphasized" press=".onDownloadRoutingTemplate"/>
+    <u:FileUploader
+    id="routingUploader"
+    buttonOnly="true"
+    buttonText="Select File"
+    icon="sap-icon://upload"
+    fileType="xlsx,xls"
+    style="Emphasized"
+    change=".onRoutingFileAdded"/>
+    <Button 
+        icon="sap-icon://excel-attachment"
+        enabled="{localModel>/savebutton}"  
+        press=".onDownloadRoutingExcel"/>
+</Toolbar>
+ <t:Table
+    id="routingTable"
+    rows="{excel>/routingData}"
+    visibleRowCount="10"
+    selectionMode="None"
+    enableColumnReordering="true">
+    <t:columns>
+        <t:Column width="10rem">
+            <Label text="Material"/>
+            <t:template><Text text="{excel>Matnr}"/></t:template> </t:Column>
+        <t:Column width="8rem">
+            <Label text="Plant"/>
+            <t:template><Text text="{excel>Werks}"/></t:template> </t:Column>
+        <t:Column width="14rem">
+            <Label text="Task Description"/>
+         <t:template><Text text="{excel>Plantext}"/></t:template></t:Column>
+        <t:Column width="6rem">
+            <Label text="Usage"/>
+            <t:template><Text text="{excel>Plnverwe}"/></t:template> </t:Column>
+        <t:Column width="8rem">
+            <Label text="Lot From"/>
+            <t:template><Text text="{excel>Losvn}"/></t:template>   </t:Column>
+        <t:Column width="8rem">
+            <Label text="Lot To"/>
+            <t:template><Text text="{excel>Losbs}"/></t:template> </t:Column>
+        <t:Column width="9rem">
+            <Label text="Operation No"/>
+            <t:template><Text text="{excel>Vornr}"/></t:template> </t:Column>
+        <t:Column width="12rem">
+            <Label text="Work Center"/>
+            <t:template><Text text="{excel>Arbpl}"/></t:template> </t:Column>
+        <t:Column width="10rem">
+            <Label text="Control Key"/>
+            <t:template><Text text="{excel>Steus}"/></t:template> </t:Column>
+        <t:Column width="12rem">
+            <Label text="Description"/>
+            <t:template><Text text="{excel>Ltxa1}"/></t:template>  </t:Column>
+        <t:Column width="8rem">
+            <Label text="Base Qty"/>
+            <t:template><Text text="{excel>Bmsch}"/></t:template> </t:Column>
+        <t:Column width="10rem">
+            <Label text="Variable Labour"/>
+            <t:template><Text text="{excel>Act1}"/></t:template> </t:Column>
+        <t:Column width="12rem">
+            <Label text="Variable Labour Unit"/>
+            <t:template><Text text="{excel>Actunt1}"/></t:template> </t:Column>
+        <t:Column width="12rem">
+            <Label text="Variable Machinery"/>
+            <t:template><Text text="{excel>Act2}"/></t:template> </t:Column>
+        <t:Column width="14rem">
+            <Label text="Variable Machinery Unit"/>
+            <t:template><Text text="{excel>Actunt2}"/></t:template> </t:Column>
+        <t:Column width="10rem">
+            <Label text="Fixed Labour"/>
+            <t:template><Text text="{excel>Fixed Labour}"/></t:template> </t:Column>
+        <t:Column width="12rem">
+            <Label text="Fixed Labour Unit"/>
+            <t:template><Text text="{excel>Act3}"/></t:template> </t:Column>
+        <t:Column width="10rem">
+            <Label text="Fixed Machinery"/>
+            <t:template><Text text="{excel>Act4}"/></t:template> </t:Column>
+        <t:Column width="14rem">
+            <Label text="Fixed Machinery Unit"/>
+            <t:template><Text text="{excel>Actunt2}"/></t:template>  </t:Column>
+        <t:Column width="8rem">
+            <Label text="Status"/>
+            <t:template>
+                <ObjectStatus text="{excel>Status}" state="{excel>State}"/>  </t:template>
+        </t:Column>
+    </t:columns>
+</t:Table>
+                </VBox>
+        </IconTabFilter>
+
+        <IconTabFilter key="Workflow" text="Workflow Log"  visible="{= !${localModel>/savebutton} }">
+            
+    <t:Table 
+        rows="{BOMApproval>/results}"
+        selectionMode="Single"
+        visibleRowCount="10"
+        enableColumnReordering="true"
+        width="100%">
+
+        <t:columns>
+
+            <t:Column width="130px">
+                <Label text="BOM Request No." />
+                <t:template>
+                    <Text text="{BOMApproval>Bomreq}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="80px">
+                <Label text="Level" />
+                <t:template>
+                    <Text text="{BOMApproval>Zlevel}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="120px">
+                <Label text="User Name" />
+                <t:template>
+                    <Text text="{BOMApproval>Apprid}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="180px">
+                <Label text="Full Name" />
+                <t:template>
+                    <Text text="{BOMApproval>Apprname}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="130px">
+                <Label text="BOM Request Status" />
+                <t:template>
+                    <Text text="{BOMApproval>Apprstat}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="200px">
+                <Label text="Comments" />
+                <t:template>
+                    <Text text="{BOMApproval>Comments}" wrapping="false" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="130px">
+                <Label text="Created Date" />
+                <t:template>
+                    <Text text="{
+                        path: 'BOMApproval>Crtdat',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'dd-MM-yyyy'
+                        }
+                    }" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="110px">
+                <Label text="Created Time" />
+                <t:template>
+                    <Text text="{path: 'BOMApproval>Crttime' , formatter: '.formatTime'}" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="130px">
+                <Label text="Approved Date" />
+                <t:template>
+                    <Text text="{
+                        path: 'BOMApproval>Apprdat',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: {
+                            pattern: 'dd-MM-yyyy'
+                        }
+                    }" />
+                </t:template>
+            </t:Column>
+
+            <t:Column width="110px">
+                <Label text="Approved Time" />
+                <t:template>
+                    <Text text="{path: 'BOMApproval>Apprtime' , formatter: '.formatTime'}" />
+                </t:template>
+            </t:Column>
+
+        </t:columns>
+
+    </t:Table>
+
+         </IconTabFilter>
+    </items>
+</IconTabBar>
+        </content>
+        <footer>
+    <OverflowToolbar>
+        <ToolbarSpacer/>
+        <Button  text="Cancel"
+            type="Transparent"
+            press=".onCancel"  visible="{localModel>/savebutton}"/>
+        <Button text="Save"
+            type="Emphasized"
+            icon="sap-icon://save"
+            press=".onSave" visible="{localModel>/savebutton}"/>
+    </OverflowToolbar>
+</footer>
+    </Page>
+</mvc:View>
